@@ -5,14 +5,15 @@ import hens from './hens.js'
  * Convert the following to more modern JavaScript, whatever the method
 */
 
-var sum = 0
-var numbers = [0, 1, 1, 2, 3, 5, 8, 13, 21]
+let sum = 0
+const numbers = [0, 1, 1, 2, 3, 5, 8, 13, 21]
 
-for (var i = 0; i < numbers.length; ++i) {
-  sum += numbers[i]
-}
+// for (var i = 0; i < numbers.length; ++i) {
+//   sum += numbers[i]
+// }
 
-export var ex1 = sum
+sum = numbers.reduce((accumulator, currentValue) => accumulator + currentValue);
+export const ex1 = sum
 
 /**
  * Exercise 2
@@ -20,10 +21,10 @@ export var ex1 = sum
  * Also convert it to ES6.
  */
 
-var animals1 = ['dog', 'cat', 'axolotl', 'bird']
-var animals2 = ['lion', 'squirrel', 'bear', 'pig']
+const animals1 = ['dog', 'cat', 'axolotl', 'bird']
+const animals2 = ['lion', 'squirrel', 'bear', 'pig']
 
-export var allTheAnimals = [] // TODO
+export var allTheAnimals = [...animals1, ...animals2] // TODO
 export var ex2 = allTheAnimals
 
 /**
@@ -32,13 +33,7 @@ export var ex2 = allTheAnimals
  * You can also heavily simplify it with a tool covered by the lesson
  */
 
-function makeDogACat (thing) {
-  if (thing === 'dog') {
-    return 'cat'
-  }
-
-  return thing
-}
+const makeDogACat = thing => thing === 'dog' ? 'cat' : thing
 
 export var ex3 = makeDogACat
 
@@ -58,7 +53,7 @@ export const scope = () => {
 }
 
 // TODO
-export const expectedValue = '?'
+export const expectedValue = 'cat'
 
 /**
  * Exercice 5
@@ -71,9 +66,13 @@ export const expectedValue = '?'
  */
 
 const number = 41
-export const transformNumber = () => {} // TODO
+export const transformNumber = (a) => {
+  return a+1
+} // TODO
 
-export const useATransformationOnANumber = () => {} // TODO
+export const useATransformationOnANumber = (fct, number) => {
+  return fct(number)
+} // TODO
 
 /**
  * Exercice 6
@@ -96,8 +95,11 @@ export const sig1 = (fullName) => `The glorious ${fullName}`
 export const sig2 = (fullName) => `${fullName} the destroyer of worlds`
 export const sig3 = (fullName) => `${fullName} with a mustache`
 
-export const generateArticleWithSignature = () => {} // TODO
-export const finalArticle = generateArticleWithSignature(/* ... */) // TODO
+export const generateArticleWithSignature = (articleBody, signature, name) => {
+  return articleBody.concat(signature(name));
+
+} // TODO
+export const finalArticle = generateArticleWithSignature(articleBody, sig1, "Nils") // TODO
 
 /**
  * Exercice 7
@@ -143,7 +145,7 @@ export const genAnimal = (name, species, legs, age, furColor) => ({
 
 // Create your animal of choice
 // TODO
-export const sampleAnimal = genAnimal(/* ... */);
+export const sampleAnimal = genAnimal("Kuzco", "Lama", 4, 25, "white");
 
 /**
  * Your animal wants to change fur color (they *are* funky like that). You need to propagate the changes on your created object.
@@ -153,7 +155,7 @@ export const sampleAnimal = genAnimal(/* ... */);
  */
 
 // TODO
-export const sampleAnimalButFunkier = null;
+export const sampleAnimalButFunkier = {...sampleAnimal, furColor: "red"}
 
 /** 7.1
  * You just received your order of 8 hens to go with your pidgeons, but you'd rather not call `genAnimal`
@@ -161,7 +163,9 @@ export const sampleAnimalButFunkier = null;
  * You will not write an entire new object, you'll rather reuse what has been done before.
  */
 
-export const generateHen = () => {} // TODO
+export const generateHen = (name, legs, age, furColor) => {
+  return(genAnimal(name,"hen", legs, age, furColor))
+} // TODO
 
 /**
  * Starting from here, you'll be mostly working with methods on collection. 
@@ -174,31 +178,37 @@ export const generateHen = () => {} // TODO
  * We want to write the function that will take the array of hens as a parameter
  * and will return the array of objects containing only their names and ages
  */
-export const hensOnlyNameAndAge = (hens) => {} // TODO
+export const hensOnlyNameAndAge = (hens) => {
+  return hens.map(hen => ({age : hen.age , name : hen.name}))
+} // TODO
 
 /** 7.3
  * We want to know if our hens are alright, and aren't suffering from genetic defects affecting their legs.
  * Write the function that will take the hens as parameter and will return the names of all the affected hens.
  */
-export const mutatedHens = (hens) => {} // TODO
+export const mutatedHens = (hens) => {
+  return hens.filter(hen => (hen.legs > 2)).map(hen => hen.name)
+} // TODO
 
 // 7.4
 // We want to know the average age of our animals.
 // Write the function that will return this average for a given array of animals
-export const averageAgeForHens = (hens) => {} // TODO
+export const averageAgeForHens = (hens) => {
+  return hens.map(hen => hen.age).reduce((acc, n) => acc + n,0)/hens.length
+} // TODO
 
 // 7.5
 // For reasons for simplicity of management, you're asked to only keep hens with names
 // that are 7 characters or shorter.
 // Write the function that will return these said names.
 
-export const max7CharsHens = (hens) => {} // TODO
+export const max7CharsHens = (hens) => hens.filter(hen => (hen.name.length <= 7)).map(hen => hen.name) // TODO
 
 // 7.6
 // A very unusual client asks for a very specific hen : with red feathers, older than 15 years old
 // Write a function that will find the first one corresponding to those criteria
 
-export const specificHen = (hens) => {} // TODO
+export const specificHen = (hens) => hens.find(hen => hen.age > 15 && hen.furColor === "red") // TODO
 
 // MORE ???
 // Write a function that merges an array of objects into a single object with every key of the objects of the array
@@ -206,15 +216,20 @@ export const specificHen = (hens) => {} // TODO
 //
 // Ex : mergeObjects([{a: 1, b: 2}, {b: 3, c: 4}]) --> {a: 1, b: 3, c: 4}
 
-export const mergeObjects = (objects) => {} // TODO
+export const mergeObjects = (objects) => {
+  return objects.reduce((acc, obj) => Object.assign(acc, obj),{})
+} // TODO
 
 // Write the function that will take two arrays, merge them but remove duplicates. You are not allowed to use a Set.
 
-export const union = (arr1, arr2) => {} // TODO
+export const union = (arr1, arr2) => {
+  const jointArray = [...arr1, ...arr2];
+  return jointArray.filter((item, index) => jointArray.indexOf(item) === index);
+} // TODO
 
 // Write the function that will take an array of arrays and return the flattened verse (only ony array with all the elements in it)
 
-export const flatten = (arr) => {} // TODO
+export const flatten = (arr) => arr.reduce((acc, val) => acc.concat(Array.isArray(val) ? flatten(val) : val), []);// TODO
 
 // Write the function that, for an array and a value, returns the array with the value placed between every two elements of the array
 // Ex : intercalate(",", ["a", "b", "c", "d"]) --> ["a", ",", "b", ",", "c", ",", "d"])
