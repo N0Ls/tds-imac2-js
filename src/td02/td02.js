@@ -7,7 +7,7 @@
  * is true for every member for the array. We'll use a function we studied last time
  */
 
-export const every = () => {} // TODO
+export const every = (predicate, array) => array.reduce((acc, el) => acc && predicate(el), true); // TODO
 
 /**
  * Exercise 2
@@ -31,9 +31,9 @@ export const every = () => {} // TODO
  */
 
 export const createTag = (name, attributes, children) => ({
-  name: name,
-  attributes: attributes,
-  children: children
+  name,
+  attributes,
+  children
 })
 
 /**
@@ -60,16 +60,18 @@ export const createTag = (name, attributes, children) => ({
  * We'll pass an empty array to `children` if there are none.
  */
 
-export const figure = () => {} // TODO
-export const figcaption = () => {} // TODO
-export const img = () => {} // TODO
-export const p = () => {} // TODO
-
+export const figure = (attributes, children) => createTag("figure", attributes || null, children || [])
+export const figcaption = (attributes, children) => createTag("figcaption", attributes || null, children || [])
+export const img = (attributes, children) => createTag("img", attributes || null, children || [])
+export const p = (attributes, children)  => createTag("p", attributes || null, children || [])
 /**
  * Create a function which, for a given tag type, returns a function to create it:
  */
 
-const tagCreator = (tagType) => { } // TODO
+const tagCreator = (tagType) => { 
+  const f = (attributes, children) => createTag(tagType, attributes || null, children || [])
+  return f
+} // TODO
 
 export const div = tagCreator('div')
 // Example: const myDiv = div({ class: 'profile__root' }, [])
@@ -90,7 +92,15 @@ export const div = tagCreator('div')
  * </figure>
  */
 
-export const generateMarkupForDog = (url, nom, description) => {} // TODO
+export const generateMarkupForDog = (url, nom, description) => {
+  figure(null, [
+    img({src : url}, []),
+    figcaption(null, [
+      p(null, [nom]),
+      p(null, [description])
+    ])
+  ])
+} // TODO
 
 /** Exercise 2.3
  * Write a function which, for a list of dogs (see `./state.js`), returns a list of `figure` tags,
