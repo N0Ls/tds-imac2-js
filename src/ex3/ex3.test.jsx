@@ -4,12 +4,12 @@ import { ExerciseThreePage } from '.';
 import Fish from './Fish';
 import { testWithErrorMessage } from '../_testing';
 
-test('The page should contain a fish', () => {
-  render(<ExerciseThreePage />);
-  testWithErrorMessage(() => {
-    expect(screen.queryByText(/°>/)).not.toBeNull();
-  }, 'No fish head °> found');
-});
+// test('The page should contain a fish', () => {
+//   render(<ExerciseThreePage />);
+//   testWithErrorMessage(() => {
+//     expect(screen.queryByText('°>')).not.toBeNull();
+//   }, 'No fish head °> found');
+// });
 
 test('Fish size', () => {
   const f = render(<Fish size={2} />);

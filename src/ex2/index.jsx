@@ -1,4 +1,5 @@
 import React from 'react';
+import Character from './Character';
 
 export const character = {
   name: 'Andy Dufresne',
@@ -12,6 +13,7 @@ export const character = {
 export const ExerciseTwoPage = () => (
   <main>
     <p>Here are our characters</p>
-    {/* Include your Character component here */}
+    <Character name={character.name} age={character.age} job={character.job} isInPrison={character.isInPrison}/>
+    <Character name={"Billy"} age={26} job={"Boucher"} isInPrison={true}/>
   </main>
 );
