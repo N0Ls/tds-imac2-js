@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 
-import './ex4.css';
 import Hero from './Hero';
+import './ex4.css';
 
 // eslint-disable-next-line import/prefer-default-export
 export const ExerciseFourView = () => {
@@ -13,13 +13,20 @@ export const ExerciseFourView = () => {
       .then((res) => res.json())
       .then((heroes) => setSuperheroes(heroes));
   }, []);
-  console.log(superheroes);
-  const MySuperHeroArray = superheroes.filter((hero) => hero.powerstats.speed > 80);
+  const predicate = (hero) => {
+    const height = hero.appearance.height[1].split(' ');
+    const heightInt = parseInt(height[0], 10);
+
+    return (hero.powerstats.speed > 80) && heightInt > 0;
+  };
+  const MySuperHeroArray = superheroes.filter((hero) => predicate(hero));
+  console.log(MySuperHeroArray);
 
   return (
     MySuperHeroArray.map((MyHero) => (
       <Hero
         name={MyHero.name}
+        imgURL={MyHero.images.sm}
         speed={MyHero.powerstats.speed}
         height={MyHero.appearance.height[1]}
       />

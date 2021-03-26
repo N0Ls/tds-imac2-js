@@ -1,9 +1,18 @@
 import React from 'react';
 
-const Hero = ({ name, speed, height }) => (
-  <div>
-    <h1>{name}</h1>
-    <h2>{speed}</h2>
+const Hero = ({
+  name,
+  speed,
+  height,
+  imgURL,
+}) => (
+  <div className="hero">
+    <h2>{name}</h2>
+    <img src={imgURL} alt="" />
+    <p className="speed">
+      Speed :
+      {speed}
+    </p>
     <p>{height}</p>
   </div>
 );
