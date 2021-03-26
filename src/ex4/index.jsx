@@ -29,6 +29,7 @@ export const ExerciseFourView = () => {
         imgURL={MyHero.images.sm}
         speed={MyHero.powerstats.speed}
         height={MyHero.appearance.height[1]}
+        weight={MyHero.appearance.weight[1]}
       />
     ))
   );

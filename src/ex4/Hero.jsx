@@ -4,6 +4,7 @@ const Hero = ({
   name,
   speed,
   height,
+  weight,
   imgURL,
 }) => (
   <div className="hero">
@@ -14,6 +15,7 @@ const Hero = ({
       {speed}
     </p>
     <p>{height}</p>
+    <p>{weight}</p>
   </div>
 );
 
